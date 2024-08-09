@@ -1,0 +1,252 @@
+{
+    "scenes": [
+        "Part1",
+        "Phong",
+        "Phong Complete",
+        "Shadows",
+        "Post Processing"
+    ],
+    "presentation": {
+        "slides": [
+            {
+                "title": "Fragment Shaders",
+                "project": "Part1",
+                "columns": [
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.frag"
+                    }
+                ]
+            },
+            {
+                "title": "GLSL Language Features",
+                "project": "Part1",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "GLSL has a C-like syntax. It supports most of C's key syntax features such as loops, conditionals, and preprocessor directives.",
+                            "## Useful Built-in Functions",
+                            "* `mix(a, b, amount)` - Linear interpolation between `a` and `b`. Works with vectors.",
+                            "* `clamp(x, min, max)` - Clamps `x` to the range `[min, max]`. HLSL has a function called `saturate` which clamps between `0.0` and `1.0`.",
+                            "* `texture(sampler, uv)` - Sample a texture at the given UV coordinates or a `vec3` for cubemaps. Called `tex2D` in HLSL and `texture2D` in older versions of GLSL.",
+                            "* `pow(x, y)` - Raise `x` to the power of `y`. Works with vectors.",
+                            "* General scalar math functions: `sin(x)`, `cos(x)`, `tan(x)`, `abs(x)`, `sign(x)`, `floor(x)`, `ceil(x)`, `max(a, b)`, `min(a, b)`, ect.",
+                            "* Vector math functions: `length(vec)`, `normalize(vec)`, `dot(vec1, vec2)`, `cross(vec1, vec2)`",
+                            "* Matrix math functions: `transpose(mat)`, `inverse(mat)`, `matrixCompMult(mat1, mat2)` (component-wise multiplication)"
+                        ]
+                    },
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "## Swizzling",
+                            "Swizzling allows for any combination of a vector's elements to be used in any order.",
+                            "```glsl",
+                            "/* ... */",
+                            "void main() {",
+                            "    vec4 foo = vec4(1.0, 2.0, 3.0, 4.0);",
+                            "    vec3 bar = foo.xww; // bar := [1.0, 4.0, 4.0]",
+                            "    foo.xy += vec2(1.0, 1.0) // foo := [2.0, 3.0, 3.0, 4.0]",
+                            "    vec3 baz = vec3(foo.xy, 0.0); // baz := [2.0, 3.0, 0.0]",
+                            "}",
+                            "```",
+                            "## Functions",
+                            "* Recursion not supported",
+                            "* `out` and `inout` parameters allow you to modify variables outside of the function.",
+                            "```glsl",
+                            "float foo(in float bar, out int baz) {",
+                            "   baz = 0;",
+                            "   return bar;",
+                            "}",
+                            "```"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Vertex Shaders",
+                "project": "Part1",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "* Before the fragment shader runs, the vertex shader is executed for each vertex in the geometry.",
+                            "* One invocation per vertex.",
+                            "* `gl_Position` is a special variable that must be set to the vertex's position in clip space.",
+                            "",
+                            "<img src=\"https://learnopengl.com/img/getting-started/pipeline.png\" alt=\"pipeline\" width=\"200\"/>",
+                            "",
+                            "* Values can be passed from the vertex shader to the fragment shader using `out` variables.",
+                            "* `in`/`out` variables are interpolated across the primitive.",
+                            "",
+                            "<img src=\"https://i.sstatic.net/M0Yqe.png\" alt=\"interpolation\" width=\"200\"/>"
+                        ]
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.vert"
+                    }
+                ]
+            },
+            {
+                "title": "Vertex Shaders",
+                "project": "Part1",
+                "columns": [
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.vert"
+                    }
+                ]
+            },
+            {
+                "title": "Phong lighting model",
+                "project": "Phong Complete",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "## Diffuse",
+                            "Soft, non-directional light scattered in all directions.",
+                            "\n$$\n    I = (-(\\text{norm}(\\vec L) \\cdot \\text{norm}(\\vec N)))^{\\mp}\n$$\n",
+                            "Where $\\vec L$ is the light direction and $\\vec N$ is the normal.",
+                            "",
+                            "In GLSL this is `clamp(-dot(normalize(L), normalize(N)), 0.0, 1.0)`.",
+                            "",
+                            "<img src=\"http://localhost:3000/assets/diffuse.svg\" alt=\"diffuse\" width=\"200\"/>"
+                        ]
+                    },
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.frag"
+                    }
+                ]
+            },
+            {
+                "title": "Phong lighting model",
+                "project": "Phong Complete",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "## Specular",
+                            "Light reflected directly into the camera.",
+                            "\n### Angle of reflection",
+                            "\n$$\n\\vec{R} = 2(\\vec{N} \\cdot \\vec{L})\\vec{N} - \\vec{L}\n$$\n",
+                            "where $\\vec{R}$ is the reflection of $\\vec{L}$ about the normal $\\vec{N}$",
+                            "",
+                            "<img src=\"https://upload.wikimedia.org/wikipedia/commons/3/35/Phong_Vectors.svg\" alt=\"diffuse\" width=\"150\"/>",
+                            "",
+                            "* Find angle between view direction and angle of reflection with same method as diffuse.",
+                            "* Raise to a power to make highlight smaller."
+                        ]
+                    },
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.frag"
+                    }
+                ]
+            },
+            {
+                "title": "Phong lighting model",
+                "project": "Phong Complete",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "## Surface Textures",
+                            "* UV coordinates are included in model and correspond to points on the texture.",
+                            "* Normal maps store normals in RGB values. Can be added to the normal to add correctly lit surface details.",
+                            "    * `normal += texture(normalMap, uv).rgb * 2.0 - 1.0`",
+                            "* Roughness maps can be used to determin specular amount to make certain areas appear smoother.",
+                            "    * Rougher areas should have larger and more dim highlights."
+                        ]
+                    },
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.frag"
+                    }
+                ]
+            },
+            {
+                "title": "Shadow Mapping",
+                "project": "Shadows",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "1. Render depth map from light's perspective.",
+                            "1. Project position of fragment onto depth map and sample depth map at position.",
+                            "1. Compare depth value to fragment's depth. If fragment is further away, it is in shadow.",
+                            "1. Bias depth value to prevent artifacts.",
+                            "",
+                            "<img src=\"https://learnopengl.com/img/advanced-lighting/shadow_mapping_theory.png\" alt=\"shadow mapping\" width=\"350\"/>",
+                            "",
+                            "## Percentage Closer Filtering",
+                            "Soften shadows by sampling multiple points around the projected point in the shadow map and averaging the results."
+                        ]
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.frag"
+                    }
+                ]
+            },
+            {
+                "title": "Shadow Mapping",
+                "project": "Shadows",
+                "columns": [
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "main.frag"
+                    }
+                ]
+            },
+            {
+                "title": "Post-processing",
+                "project": "Post Processing",
+                "columns": [
+                    {
+                        "type": "gl-window"
+                    },
+                    {
+                        "type": "shader-editor",
+                        "filename": "post.frag"
+                    }
+                ]
+            },
+            {
+                "project": "Part1",
+                "columns": [
+                    {
+                        "type": "markdown",
+                        "markdownContent": [
+                            "## Further Reading",
+                            "* **learnopengl.com** - We already linked to and used images from this several times earlier. One thing to note is that while it's a great resource for learning the basic, it does not teach very up-to-date or modern techniques.",
+                            "* **Freya Holmér on YouTube** - Many videos covering shaders and Unity ShaderLab. Mainly in HLSL which we did not look at here but once you know GLSL it is not too hard to pick up.",
+                            "* **Real-Time Rendering** - A comprehensive book on real-time rendering.",
+                            "* **GPU Gems** - Several books published by Nvidia available for free online."
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
