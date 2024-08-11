@@ -1,16 +1,17 @@
 {
     "scenes": [
-        "Part1",
-        "Phong",
-        "Phong Complete",
-        "Shadows",
-        "Post Processing"
+        "1. Fundamentals",
+        "2. Phong Model",
+        "3. Shadows",
+        "4. Post Processing",
+        "[Example] Phong Complete",
+        "[Example] Shadows Complete"
     ],
     "presentation": {
         "slides": [
             {
                 "title": "Fragment Shaders",
-                "project": "Part1",
+                "project": "1. Fundamentals",
                 "columns": [
                     {
                         "type": "gl-window"
@@ -23,7 +24,7 @@
             },
             {
                 "title": "GLSL Language Features",
-                "project": "Part1",
+                "project": "1. Fundamentals",
                 "columns": [
                     {
                         "type": "markdown",
@@ -68,7 +69,7 @@
             },
             {
                 "title": "Vertex Shaders",
-                "project": "Part1",
+                "project": "1. Fundamentals",
                 "columns": [
                     {
                         "type": "markdown",
@@ -93,7 +94,7 @@
             },
             {
                 "title": "Vertex Shaders",
-                "project": "Part1",
+                "project": "1. Fundamentals",
                 "columns": [
                     {
                         "type": "gl-window"
@@ -106,7 +107,7 @@
             },
             {
                 "title": "Phong lighting model",
-                "project": "Phong Complete",
+                "project": "2. Phong Model",
                 "columns": [
                     {
                         "type": "markdown",
@@ -118,7 +119,7 @@
                             "",
                             "In GLSL this is `clamp(-dot(normalize(L), normalize(N)), 0.0, 1.0)`.",
                             "",
-                            "<img src=\"http://localhost:3000/assets/diffuse.svg\" alt=\"diffuse\" width=\"200\"/>"
+                            "<p align=\"center\"><img src=\"http://localhost:3000/assets/diffuse.svg\" alt=\"diffuse\" width=\"200\"/></p>"
                         ]
                     },
                     {
@@ -132,7 +133,7 @@
             },
             {
                 "title": "Phong lighting model",
-                "project": "Phong Complete",
+                "project": "2. Phong Model",
                 "columns": [
                     {
                         "type": "markdown",
@@ -160,7 +161,7 @@
             },
             {
                 "title": "Phong lighting model",
-                "project": "Phong Complete",
+                "project": "2. Phong Model",
                 "columns": [
                     {
                         "type": "markdown",
@@ -184,7 +185,7 @@
             },
             {
                 "title": "Shadow Mapping",
-                "project": "Shadows",
+                "project": "3. Shadows",
                 "columns": [
                     {
                         "type": "markdown",
@@ -208,7 +209,7 @@
             },
             {
                 "title": "Shadow Mapping",
-                "project": "Shadows",
+                "project": "3. Shadows",
                 "columns": [
                     {
                         "type": "gl-window"
@@ -221,7 +222,7 @@
             },
             {
                 "title": "Post-processing",
-                "project": "Post Processing",
+                "project": "4. Post Processing",
                 "columns": [
                     {
                         "type": "gl-window"
@@ -233,7 +234,7 @@
                 ]
             },
             {
-                "project": "Part1",
+                "project": "1. Fundamentals",
                 "columns": [
                     {
                         "type": "markdown",
