@@ -5,7 +5,8 @@
         "3. Shadows",
         "4. Post Processing",
         "[Example] Phong Complete",
-        "[Example] Shadows Complete"
+        "[Example] Shadows Complete",
+        "[Example] Bloom"
     ],
     "presentation": {
         "slides": [
