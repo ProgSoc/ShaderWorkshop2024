@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass{article}
-\usepackage[margin=0.6in]{geometry}
+\usepackage[margin=0.5in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -19,6 +19,7 @@
 \usepackage{colonequals}
 \usepackage{ragged2e}
 \usepackage{titlesec}
+\usepackage{tikz}
 
 \setlength{\parindent}{0cm}
 \parskip=7pt plus 1pt
@@ -26,8 +27,14 @@
 \titlespacing\section{0pt}{5pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 \titlespacing\subsection{0pt}{5pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
+\graphicspath{{./img/}}
+
 \begin{document}
     \begin{landscape}
+        \includegraphics[height=1.3cm]{progsoc.png}
+
+        \vspace{-1.3cm}
+
         \begin{center}
             \begin{LARGE}
                 \textbf{Shaders Cheatsheet}
