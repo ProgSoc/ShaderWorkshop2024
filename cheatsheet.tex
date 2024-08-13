@@ -18,10 +18,13 @@
 \usepackage{xparse}
 \usepackage{colonequals}
 \usepackage{ragged2e}
+\usepackage{titlesec}
 
 \setlength{\parindent}{0cm}
 \parskip=7pt plus 1pt
 \pagenumbering{gobble}
+\titlespacing\section{0pt}{5pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{5pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
 \begin{document}
     \begin{landscape}
@@ -56,7 +59,7 @@ void main() {
     FragColor = vec4(1.);
 }
             \end{verbatim}
-            \subsection{Compute Shader}
+
             \section{GLSL Functions}
             \begin{small}
                 \begin{tabular}{l l}
@@ -64,6 +67,7 @@ void main() {
                     \texttt{pow(x, y)} & $x^y$ \\
                     \texttt{clamp(x, min, max)} & Clamp \texttt{x} to \texttt{min} and \texttt{max} \\
                     \texttt{dot(u, v)} & $\vec u \cdot \vec v$ \\
+                    \texttt{cross(u, v)} & $\vec u \times \vec v$ \\
                     \texttt{normalize(v)} & Normalise \texttt{v} to length 1 \\
                     \texttt{length(v)} & Length of \texttt{v} \\
                     \texttt{reflect(I, N)} & Reflect \texttt{I} about \texttt{N} \\
@@ -80,18 +84,32 @@ void main() {
                 {l l}
                 Invocation & A single execution instance of a shader \\
                 UV & Texture coordinates \\
-                Texel & Texture element \\
+                Normal & Vector perpendicular to surface \\
+                Varying & Interpolated value between vertices \\
+                Attribute & Per-vertex data \\
+                Primitive & Line or triangle \\
+                Fragment & Potential pixel in primitive \\
+                Frame Buffer & Texture to render to \\
+                Texel & Pixel in texture \\
+                Blur Kernel & Offsets and weights for blurring \\
+                $n^{\mp}$ & $n$ clamped to $[0, 1]$ \\
+                $n^+$ & $n$ clamped to $[0, \infty]$ \\
             \end{tabular}
 
-            \section{Blinn-Phong}
+            \section{Lighting}
+            \subsection{Phong}
             \begin{tabular}{l l}
                 $I = I_a + I_d + I_s$ & Total intensity \\
-                $I_d = (-\vec L \cdot \vec N)^{\mp}$ & Diffuse intensity \\
+                $I_d = (-\vec L \cdot \vec N)^{\mp}$ & Lambertian Diffuse intensity \\
                 $R = 2(\vec L \cdot \vec N)\vec N - \vec L$ & Reflection vector \\
                 $I_s = ((\vec R \cdot \vec V)^{\mp})^{\text{size}}$ & Specular intensity \\
             \end{tabular}
 
-            \section{BRDF}
+            \subsection{Fresnel}
+            \begin{tabular}{l l}
+                $F_0 + (1 - F_0)(1 - (\vec V \cdot \vec N)^+)^5$ & Schlick Fresnel \\
+                $F_0 = \left(\frac{n_1 - n_2}{n_1 + n_2}\right)^2$ & Fresnel factor \\
+            \end{tabular}
             \section{Techniques}
             \begin{itemize}
                 \item \RaggedRight Shadow Mapping: \texttt{shadow = texture( shadowMap, shadowProj.xy).r - bias < shadowProj.z }
@@ -100,6 +118,7 @@ void main() {
                 \item Random: Use hash function on UV and time
                 \item Gamma Correction: \texttt{colour = pow(colour, vec3(1.0/gamma))}
                 \item White Balance: \texttt{colour *= someColour.rgb}
+                \item Skybox Reflection: \texttt{colour = mix(colour, texture(skybox, reflect(V, N)).rgb, reflectance * fresnel)}
             \end{itemize}
 
             \section{Clip Space}
@@ -140,8 +159,17 @@ void main() {
                     \end{bmatrix}
                     $$
                     } \\
-                    Rotation (quaternion)
+                    Rotation (quaternion) & {
+                    } \\
                 \end{tabular}
+                $$
+                \begin{bmatrix}
+                    1 - 2(y^2 + z^2) & 2(xy - zw )& 2(xz + yw) & 0 \\
+                    2(xy + zw) & 1 - 2(x^2 - z^2) & 2(yz - xw) & 0 \\
+                    2(xz - yw) & 2(yz + xw) & 1 - 2(x^2 - y^2) & 0 \\
+                    0 & 0 & 0 & 1 \\
+                \end{bmatrix}$$
+                where $w = \cos(\theta/2)$ and $x, y, z = \sin(\theta/2)\vec v$ and $\vec v$ is the axis of rotation
             \end{small}
         \end{multicols}
     \end{landscape}
