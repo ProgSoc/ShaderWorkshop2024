@@ -61,7 +61,7 @@ void main() {
     vec3 cameraPosition = vec3(-8., 4., 8.);
 
     vec3 viewDirection = normalize(vPos.xyz - cameraPosition);
-    vec3 reflectionDirection = normalize(2. * dot(normal, sun) * normal - sun);
+    vec3 reflectionDirection = normalize(reflect(-sun, normal));
     float specularAngle = clamp(dot(viewDirection, reflectionDirection), 0., 1.);
     vec3 specular = vec3(pow(specularAngle, 20.));
 
