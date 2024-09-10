@@ -128,21 +128,19 @@ void main() {
                 \item Skybox Reflection: \texttt{colour = mix(colour, texture(skybox, reflect(V, N)).rgb, reflectance * fresnel)}
             \end{itemize}
 
-            \section{Clip Space}
+	    \section{Coordinate Systems}
             \begin{tabular}{l l}
-                $(x/w, y/w)$ & Normalized Device Coordinates \\
-                $z/w & Depth/Distance to camera \\
+                $(x/w, y/w)$ & NDC from Clip space \\
+                $z/w & Depth/Distance to camera in Clip space \\
+		$$
+		\begin{bmatrix}
+		    x/w \\
+		    y/w \\
+		    z/w \\
+		\end{bmatrix}
+		$$ &
+		World space in homogeneous coordinates \\
             \end{tabular}
-            \section{Homogeneous Coordinates}
-            $$
-            \text{out}
-            =
-            \begin{bmatrix}
-                x/w \\
-                y/w \\
-                z/w \\
-            \end{bmatrix}
-            $$
             \subsection{Transformations}
             \begin{small}
                 \begin{tabular}{l l}
